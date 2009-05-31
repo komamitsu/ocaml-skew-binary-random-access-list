@@ -6,4 +6,10 @@
 .ml.cmo :
 	ocamlc -c $<
 
-all : skewBinaryRandomAccessList.cmi skewBinaryRandomAccessList.cmo
+MODULE=skewBinaryRandomAccessList
+
+all : ${MODULE}.cmi ${MODULE}.cmo
+
+clean :
+	rm -f ${MODULE}.cmi ${MODULE}.cmo
+

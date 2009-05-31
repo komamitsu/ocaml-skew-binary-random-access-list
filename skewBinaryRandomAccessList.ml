@@ -34,3 +34,19 @@ let rec lookup i = function
   | (w, t)::rest -> 
       if i < w then lookup_tree i (w, t)
       else lookup (i - w) rest
+
+let rec update_tree i v = function
+  | _, Leaf _ ->
+      if i = 0 then Leaf v 
+      else raise (Invalid_argument "update_tree: empty")
+  | w, Node (x, t1, t2) ->
+      if i = 0 then Node (v, t1, t2)
+      else 
+        if i < w / 2 then Node (x, (update_tree (i - 1) v (w / 2,  t1)), t2)
+        else Node (x, t1, (update_tree ((i - 1) - w / 2) v (w / 2, t2)))
+
+let rec update i v = function
+  | [] -> raise (Invalid_argument "update: empty")
+  | (w, t)::rest -> 
+      if i < w then (w, (update_tree i v (w, t)))::rest
+      else (w, t)::update (i - w) v rest
