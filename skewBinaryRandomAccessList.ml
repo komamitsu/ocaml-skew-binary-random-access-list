@@ -26,7 +26,7 @@ let rec lookup_tree i = function
   | w, Node (x, t1, t2) ->
       if i = 0 then x
       else 
-        if i < w / 2 then lookup_tree (i - 1) (w / 2,  t1)
+        if i - 1 < w / 2 then lookup_tree (i - 1) (w / 2,  t1)
         else lookup_tree (i - 1 - w / 2) (w / 2, t2)
 
 let rec lookup i = function
@@ -42,7 +42,7 @@ let rec update_tree i v = function
   | w, Node (x, t1, t2) ->
       if i = 0 then Node (v, t1, t2)
       else 
-        if i < w / 2 then Node (x, (update_tree (i - 1) v (w / 2,  t1)), t2)
+        if i - 1 < w / 2 then Node (x, (update_tree (i - 1) v (w / 2,  t1)), t2)
         else Node (x, t1, (update_tree (i - 1 - w / 2) v (w / 2, t2)))
 
 let rec update i v = function
