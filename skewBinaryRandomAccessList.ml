@@ -32,5 +32,5 @@ let rec lookup_tree i = function
 let rec lookup i = function
   | [] -> raise (Invalid_argument "lookup: empty")
   | (w, t)::rest -> 
-      if i < w then lookup_tree i t
+      if i < w then lookup_tree i (w, t)
       else lookup (i - w) rest
