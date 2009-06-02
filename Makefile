@@ -1,15 +1,28 @@
-.SUFFIXES : .mli .cmi .ml .cmo
-
-.mli.cmi :
-	ocamlc $<
-
-.ml.cmo :
-	ocamlc -c $<
-
+OCAMLC=ocamlc
+OCAMLOPT=ocamlopt
+OCAMLDEP=ocamldep
+OCAMLFLAGS=
+OCAMLOPTFLAGS=
+RM=rm -f
 MODULE=skewBinaryRandomAccessList
 
-all : ${MODULE}.cmi ${MODULE}.cmo
+.SUFFIXES: .mli .cmi .ml .cmo .cmx
 
-clean :
-	rm -f ${MODULE}.cmi ${MODULE}.cmo
+.mli.cmi:
+	$(OCAMLC) -c $<
+
+.ml.cmo:
+	$(OCAMLC) -c $<
+
+.ml.cmx:
+	$(OCAMLOPT) -c $<
+
+all: bytecode nativecode
+
+bytecode: $(MODULE).cmi $(MODULE).cmo
+
+nativecode: $(MODULE).cmi $(MODULE).cmx
+
+clean:
+	$(RM) $(MODULE).cm* $(MODULE).o
 
